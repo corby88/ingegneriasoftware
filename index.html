@@ -2,25 +2,35 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Quiz Ingegneria del Software</title>
+  <title>Simulatore Esame - Ingegneria del Software</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="container">
     <h1>Simulatore Esame - Ingegneria del Software</h1>
-    
+
     <div id="quiz-container">
-      <h2 id="question">Domanda</h2>
+
+      <!-- 📊 Contatore -->
+      <h3 id="progress"></h3>
+
+      <!-- ❓ Domanda -->
+      <h2 id="question"></h2>
+
+      <!-- 📋 Risposte -->
       <div id="answers"></div>
-      <button onclick="nextQuestion()">Prossima</button>
+
+      <!-- ▶️ Bottone Prossima -->
+      <button id="nextBtn" onclick="nextQuestion()">Prossima</button>
+
     </div>
 
+    <!-- 📊 Risultato -->
     <h3 id="score"></h3>
   </div>
 
   <script src="questions.js"></script>
   <script src="script.js"></script>
 </body>
-  <button id="nextBtn" onclick="nextQuestion()">Prossima</button>
 </html>
