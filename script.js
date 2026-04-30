@@ -21,6 +21,15 @@ if (examMode) {
   selectedQuestions = shuffle([...questions]);
 }
 
+// 📊 Percentuale live
+function updateLiveScore() {
+  let answered = currentQuestion;
+  let percentuale = answered === 0 ? 0 : Math.round((score / answered) * 100);
+
+  document.getElementById("liveScore").innerText =
+    "Corrette: " + score + "/" + answered + " (" + percentuale + "%)";
+}
+
 function loadQuestion() {
   const q = selectedQuestions[currentQuestion];
 
@@ -46,6 +55,9 @@ function loadQuestion() {
 
     answersDiv.appendChild(btn);
   });
+
+  // aggiorna live score
+  updateLiveScore();
 }
 
 function checkAnswer(selected, clickedButton) {
@@ -67,6 +79,9 @@ function checkAnswer(selected, clickedButton) {
   if (selected === q.correct) {
     score++;
   }
+
+  // aggiorna percentuale live
+  updateLiveScore();
 
   document.getElementById("nextBtn").style.display = "block";
 }
