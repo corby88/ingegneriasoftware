@@ -1,7 +1,7 @@
 let currentQuestion = 0;
 let score = 0;
 
-// 🔀 Fisher-Yates shuffle (corretto)
+// 🔀 Shuffle corretto
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -10,13 +10,20 @@ function shuffle(array) {
   return array;
 }
 
-// 🎯 30 domande random
-let selectedQuestions = shuffle([...questions]).slice(0, 30);
+/* 🔥 CAMBIA QUI MODALITÀ */
+let examMode = false; // 👉 true = esame (30 domande) | false = tutte
+
+let selectedQuestions;
+
+if (examMode) {
+  selectedQuestions = shuffle([...questions]).slice(0, 30);
+} else {
+  selectedQuestions = shuffle([...questions]); // 👉 tutte le domande
+}
 
 function loadQuestion() {
   const q = selectedQuestions[currentQuestion];
 
-  // 📊 Contatore
   document.getElementById("progress").innerText =
     "Domanda " + (currentQuestion + 1) + " / " + selectedQuestions.length;
 
@@ -25,10 +32,8 @@ function loadQuestion() {
   const answersDiv = document.getElementById("answers");
   answersDiv.innerHTML = "";
 
-  // Nascondi bottone
   document.getElementById("nextBtn").style.display = "none";
 
-  // 🔀 Shuffle risposte
   const shuffledOptions = shuffle([...q.options]);
 
   shuffledOptions.forEach(option => {
@@ -61,7 +66,6 @@ function checkAnswer(selected, clickedButton) {
     score++;
   }
 
-  // Mostra bottone
   document.getElementById("nextBtn").style.display = "block";
 }
 
@@ -76,12 +80,13 @@ function nextQuestion() {
 }
 
 function endQuiz() {
-  document.getElementById("quiz-container").innerHTML = "<h2>Esame completato!</h2>";
+  document.getElementById("quiz-container").innerHTML = "<h2>Quiz completato!</h2>";
 
-  let voto = Math.round((score / 30) * 30);
+  let totale = selectedQuestions.length;
+  let voto = Math.round((score / totale) * 30);
 
   document.getElementById("score").innerText =
-    "Risposte corrette: " + score + "/30 → Voto: " + voto;
+    "Risposte corrette: " + score + "/" + totale + " → Voto: " + voto;
 }
 
 loadQuestion();
