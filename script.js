@@ -1,16 +1,18 @@
 let currentQuestion = 0;
 let score = 0;
 
+// 🔀 Mescola
 function shuffle(array) {
   return array.sort(() => Math.random() - 0.5);
 }
 
+// 🎯 30 domande random
 let selectedQuestions = shuffle([...questions]).slice(0, 30);
 
 function loadQuestion() {
   const q = selectedQuestions[currentQuestion];
 
-  // 📊 CONTATORE
+  // 📊 Contatore
   document.getElementById("progress").innerText =
     "Domanda " + (currentQuestion + 1) + " / " + selectedQuestions.length;
 
@@ -18,6 +20,9 @@ function loadQuestion() {
 
   const answersDiv = document.getElementById("answers");
   answersDiv.innerHTML = "";
+
+  // Nascondi bottone
+  document.getElementById("nextBtn").style.display = "none";
 
   q.options.forEach(option => {
     const btn = document.createElement("button");
@@ -49,9 +54,8 @@ function checkAnswer(selected, clickedButton) {
     score++;
   }
 
-  setTimeout(() => {
-    nextQuestion();
-  }, 1000);
+  // Mostra bottone
+  document.getElementById("nextBtn").style.display = "block";
 }
 
 function nextQuestion() {
