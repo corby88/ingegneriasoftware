@@ -1,9 +1,13 @@
 let currentQuestion = 0;
 let score = 0;
 
-// 🔀 Mescola
+// 🔀 Fisher-Yates shuffle (corretto)
 function shuffle(array) {
-  return array.sort(() => Math.random() - 0.5);
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 // 🎯 30 domande random
@@ -24,7 +28,10 @@ function loadQuestion() {
   // Nascondi bottone
   document.getElementById("nextBtn").style.display = "none";
 
-  q.options.forEach(option => {
+  // 🔀 Shuffle risposte
+  const shuffledOptions = shuffle([...q.options]);
+
+  shuffledOptions.forEach(option => {
     const btn = document.createElement("button");
     btn.innerText = option;
 
